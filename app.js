@@ -20,8 +20,6 @@ app.get('/pet/:ownerEmail/:petIndex', function(req, res) {
 
 })
 
-app.
-
 app.listen(port, function() {
   console.log('Server up and running on port', port)
 })
