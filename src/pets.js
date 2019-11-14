@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import Modal from '@material-ui/core/Modal';
 
 function Copyright() {
   return (
@@ -57,9 +58,84 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
+function getModalStyle() {
+  const top = 25;
+
+  return {
+    top: `${top}%`,
+    margin:'auto',
+  };
+}
+
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+function CardModal() {
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const classes = useStyles();
+
+  return (
+    // TODO(Daniel): Keys should be unique (maybe pass key as prop?)
+    <Grid item key={1} xs={12} sm={6} md={4}>
+      <Card className={classes.card}>
+        <CardMedia
+          className={classes.cardMedia}
+          image="https://source.unsplash.com/random"
+          title="Image title"
+        />
+        <CardContent className={classes.cardContent}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Heading
+          </Typography>
+          <Typography>
+            This is a media card. You can use this section to describe the content.
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary" onClick={ handleOpen }>
+            View
+          </Button>
+          <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={open}
+            onClose={handleClose}
+            style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+          >
+            <div style={modalStyle} className={classes.paper}>
+              <h2 id="simple-modal-title">Text in a modal</h2>
+              <p id="simple-modal-description">
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              </p>
+            </div>
+          </Modal>
+          <Button size="small" color="primary">
+            Edit
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
+  );
+}
 
 export default function Album() {
   const classes = useStyles();
@@ -107,31 +183,7 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+              <CardModal/>
             ))}
           </Grid>
         </Container>
