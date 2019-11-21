@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         postal_code: Number,
         house_number: String
     },
-    pets: Array[{
+    pets: [{
         name: String,
         color: String,
         breed: String,
@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
         weight: Number,
         species: String,
         photo: String,
-        vaccines: Array[{
+        vaccines: [{
             type: String,
             application_date: Date
         }]
@@ -30,7 +30,28 @@ const userSchema = mongoose.Schema({
 
 let User = mongoose.model('User', userSchema);
 
-let UserFunctions = {
+let UserList = {
+	getByEmail : function(email) {
+		return User.find({email: email}).then(foundUser => {
+			return foundUser;
+		}).catch(error => {
+			throw Error(error);
+		});
+	},
+	postUser : function(newUser) {
+		return User.find({email: newUser.email}).then(userList => {
+			if (userList.length == 0) {
+				return User.create(newUser).then(user => {
+					return user;
+				}).catch(function(error) {
+					throw Error(error);
+				});
+			}
+			return 409;
+		}).catch(error => {
+			throw Error(error);
+		});
+	},
 	getAll : function() {
 		return User.find().then(function(users) {
 			return users;
@@ -67,7 +88,7 @@ let UserFunctions = {
 		});
 	},
 	put : function(updateUser){
-		return UserFunctions.find(updateUser.email)
+		return UserList.find(updateUser.email)
 			.then( user => {
 				if ( user ){
 					return Student.findOneAndUpdate( {email : user.email}, {$set : updateUser}, {new : true})
@@ -88,4 +109,4 @@ let UserFunctions = {
 	}
 }
 
-module.exports = { UserFunctions };
+module.exports = { UserList };

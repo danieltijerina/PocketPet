@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import Album from './pets';
+import App from './app'
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(<Album />, document.getElementById('root'));
+ReactDOM.render(<BrowserRouter> <App /> </BrowserRouter>, document.getElementById('root'));
 registerServiceWorker();
