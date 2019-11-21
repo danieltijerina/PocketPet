@@ -12,7 +12,20 @@ const userSchema = mongoose.Schema({
         country: String,
         postal_code: Number,
         house_number: String
-    }
+    },
+    pets: [{
+        name: String,
+        color: String,
+        breed: String,
+        size: String,
+        weight: Number,
+        species: String,
+        photo: String,
+        vaccines: [{
+            type: String,
+            application_date: Date
+        }]
+    }]
 });
 
 let User = mongoose.model('User', userSchema);

@@ -2,17 +2,21 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
+let bodyParser = require('body-parser');
+let jsonParser = bodyParser.json();
 
 let {UserList} = require("./model");
 
+
 router.post('/register', (req, res, next) => {
-	let {email, password} = req.body;
-	if(!email || !password) {
+	if(!req.body.email || !req.body.password) {
 		return res.status(406).json({
 			status: 406,
 			message: "Missing Params"
 		});
-	}
+    }
+    let email = req.body.email
+    let password = req.body.password
 	bcrypt.hash(password, 10).then(hashPasss => {
 		UserList.getByEmail(email).then( response => {
 			if(response.length == 0) {
@@ -73,6 +77,18 @@ router.post('/login', (req, res, next) => {
 			status : 500
 		});
 	});
+});
+
+router.get('/', (req, res, next)  => {
+	let email = req.query.email;
+	UserList.getByEmail(email).then( response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch( err => {
+		console.log(err);
+		return res.status(500).json(err);
+	})
+
 });
 
 module.exports = router;
