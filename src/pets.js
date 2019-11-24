@@ -167,7 +167,7 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                    <Button component={RouterLink} to={{ pathname: '/home', state: { name: 'Daniel'} }} variant="contained" color="primary">
+                    <Button component={RouterLink} to={{ pathname: '/home', state: { name: 'Cookie'} }} variant="contained" color="primary">
                       Main call to action
                   </Button>
                 </Grid>
