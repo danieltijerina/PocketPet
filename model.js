@@ -31,6 +31,13 @@ const userSchema = mongoose.Schema({
 let User = mongoose.model('User', userSchema);
 
 let UserList = {
+	addPet: function(email, pets) {
+		return User.findOneAndUpdate({email: email}, {$set: {pets: pets}}).then(foundUser => {
+			return foundUser;
+		}).catch(err => {
+			throw Error(err);
+		})
+	},
 	getByEmail : function(email) {
 		return User.find({email: email}).then(foundUser => {
 			return foundUser;
@@ -67,7 +74,7 @@ let UserList = {
 		});
 	},
 	post : function(newUser) {
-		return Student.find(newUser).then(function(userData) {
+		return User.find(newUser).then(function(userData) {
 			if (userData.length == 0) {
 				return User.create(newUser).then(function(user) {
 					return user;
@@ -88,12 +95,12 @@ let UserList = {
 		});
 	},
 	put : function(updateUser){
-		return UserList.find(updateUser.email)
+		return UserList.getByEmail(updateUser.email)
 			.then( user => {
 				if ( user ){
-					return Student.findOneAndUpdate( {email : user.email}, {$set : updateUser}, {new : true})
-						.then( newStudent => {
-							return newStudent;
+					return User.findOneAndUpdate( {email : user.email}, {$set : updateUser}, {new : true})
+						.then( newUser => {
+							return newUser;
 						})
 						.catch(error => {
 							throw Error(error);

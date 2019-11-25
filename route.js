@@ -79,6 +79,50 @@ router.post('/login', (req, res, next) => {
 	});
 });
 
+router.get('/users', (req, res, next) => {
+	UserList.getAll().then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	})
+});
+
+router.get('/user/:email', (req, res, next) => {
+	const email = req.params.email;
+	UserList.getByEmail(email).then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	})
+});
+
+router.put('/addPet/:email', (req, res, next) => {
+	const updatePets = req.body;
+	const email = req.params.email;
+	UserList.addPet(email, updatePets).then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	});
+});
+
+router.get('/pets/:email', (req, res) => {
+	const email = req.params.email;
+	UserList.getByEmail(email).then(response => {
+		console.log(response[0].pets);
+		return res.status(200).json(response[0].pets);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	})
+});
+
 router.get('/', (req, res, next)  => {
 	let email = req.query.email;
 	UserList.getByEmail(email).then( response => {
