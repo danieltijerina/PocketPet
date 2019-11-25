@@ -34,6 +34,7 @@ class NewPet extends Component {
 			return response.json();
 		}).then(data => {
 			dogBreeds = data.message;
+			dogBreeds.unshift("Selecciona la raza.")
 			this.populateBreeds(this.state.species);
 		}).catch(err => {
 			//Alert user that there was an error retriving the list of breeds
@@ -44,6 +45,7 @@ class NewPet extends Component {
 			return response.json();
 		}).then(data => {
 			catBreeds = data.map(cat => cat.name);
+			catBreeds.unshift("Selecciona la raza.")
 			this.populateBreeds(this.state.species);
 		}).catch(err => {
 			//Alert user that there was an error retriving the list of breeds
@@ -51,6 +53,7 @@ class NewPet extends Component {
 		});
 		this.populateBreeds = (val) => {
 			this.setState({species: val}, function() {			
+				this.setState({breed: ''});
 				if(this.state.species === 'Perro') {
 					this.setState({breeds: dogBreeds});
 				} else if (this.state.species === 'Gato') {
@@ -59,16 +62,7 @@ class NewPet extends Component {
 					this.setState({breeds: ['No hay especie seleccionada']});
 				}
 			});
-;		};
-		let setState = () => {
-			if (this.state.name !== '') {
-				this.setState({state: 'Actualizar info de ' + this.state.name})
-				this.setState({edit: true});
-				//Perform Call to get pet info!
-			}
 		};
-
-		setState();
 
 		this.updateValue = (e) => {
 			let key = e.target.name;
@@ -99,7 +93,7 @@ class NewPet extends Component {
 			};
 			let vaccineList = this.state.vaccines;
 			vaccineList.push(vaccine);
-			this.setState({vaccines: vaccineList, type: '', application_date: new Date});
+			this.setState({vaccines: vaccineList, type: '', application_date: new Date()});
 		};
 
 		this.deleteRow = (index) => {
@@ -118,9 +112,22 @@ class NewPet extends Component {
 			);
 		};
 	};
+
+	componentDidMount() {
+		let setState = () => {
+			if (this.props.location.state.name !== '') {
+				console.log(this.props.location.state.name)
+				this.setState({state: 'Actualizar info de ' + this.props.location.state.name})
+				this.setState({edit: true});
+				//Perform Call to get pet info!
+			}
+		};
+		setState();
+	}
     
     render() {
-    	const style = this.state.edit ? {disply: 'none'} : {};
+    	const style = this.state.edit ? {} : {display: 'none'};
+    	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
 
         return (
         	<div>
@@ -165,6 +172,10 @@ class NewPet extends Component {
 				      	<div className="col-md-4">
 				      		<label htmlFor="photo">Imagen</label>
 				      		<input className="form-control form-control-lg" type='text' name='photo' value={this.state.photo} placeholder="Url de la imagen" onChange={this.updateValue}></input>
+				      	</div>
+				      	<div className="col-md-4" style={disButton}>
+				      		<br/>
+				      		<a className='btn btn-primary btn-lg' href={this.state.photo} target="_blank">Vista Previa</a>
 				      	</div>
 				      </div>
 				      <div className="form-group">
