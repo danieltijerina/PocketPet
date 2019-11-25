@@ -62,16 +62,7 @@ class NewPet extends Component {
 					this.setState({breeds: ['No hay especie seleccionada']});
 				}
 			});
-;		};
-		let setState = () => {
-			if (this.state.name !== '') {
-				this.setState({state: 'Actualizar info de ' + this.state.name})
-				this.setState({edit: true});
-				//Perform Call to get pet info!
-			}
 		};
-
-		setState();
 
 		this.updateValue = (e) => {
 			let key = e.target.name;
@@ -120,10 +111,22 @@ class NewPet extends Component {
 				</tr>
 			);
 		};
-		this.style = this.state.edit ? {} : {display: 'none'};
 	};
+
+	componentDidMount() {
+		let setState = () => {
+			if (this.props.location.state.name !== '') {
+				console.log(this.props.location.state.name)
+				this.setState({state: 'Actualizar info de ' + this.props.location.state.name})
+				this.setState({edit: true});
+				//Perform Call to get pet info!
+			}
+		};
+		setState();
+	}
     
     render() {
+    	const style = this.state.edit ? {} : {display: 'none'};
     	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
 
         return (
@@ -184,7 +187,7 @@ class NewPet extends Component {
 				      </div>
 				    </form>
 			    </div>
-			    <div className="container" style={this.style}>
+			    <div className="container" style={style}>
 			    	<h2>Vacunas</h2>
 			    	<table className='table'>
 			    		<thead>
