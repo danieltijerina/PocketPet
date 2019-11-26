@@ -13,8 +13,11 @@ class NewPet extends Component {
 			breeds: ['No hay especie seleccionada'],
 			state: 'Registrar tu mascota',
 			edit: false,
+			//User attributes
+			email: this.props.location.state.email,
 			//Pet attributes
-			name: this.props.location.state.name,
+			id: this.props.location.state.id,
+			name: '',
 			color: '',
 			breed: '',
 			size: '',
@@ -82,7 +85,33 @@ class NewPet extends Component {
 				photo: this.state.photo,
 				vaccines: this.state.vaccines,
 			}
-			console.log(pet);
+			console.log(JSON.stringify(pet));
+
+			if(this.state.edit) {
+				let url = "http://localhost:4000/updatePet/" + this.state.email + '/' + this.state.id;
+				console.log(url);
+				fetch(url, {
+					method: 'POST',
+					body: JSON.stringify(pet), // data can be `string` or {object}!
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json())
+					.catch(error => console.error('Error:', error))
+					.then(response => console.log('Success:', response));
+			} else {
+				let url = "http://localhost:4000/addPet/" + this.state.email;
+				console.log(url);
+				fetch(url, {
+					method: 'PUT',
+					body: JSON.stringify(pet), // data can be `string` or {object}!
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json())
+					.catch(error => console.error('Error:', error))
+					.then(response => console.log('Success:', response));
+			}
 		};
 
 		this.addVaccine = (e) => {
@@ -114,12 +143,39 @@ class NewPet extends Component {
 	};
 
 	componentDidMount() {
+		const identifier = this.state.id;
 		let setState = () => {
-			if (this.props.location.state.name !== '') {
-				console.log(this.props.location.state.name)
-				this.setState({state: 'Actualizar info de ' + this.props.location.state.name})
+			if (this.props.location.state.id !== '') {
+				this.setState({state: 'Actualizar info de mascota'})
 				this.setState({edit: true});
-				//Perform Call to get pet info!
+				//Perform Call to get pet info using this.state.id
+				console.log(this.state.id);
+
+				let url = "http://localhost:4000/user/" + this.state.email
+				fetch(url, {
+					method: 'GET',
+				}).then(res => res.json())
+					.catch(error => console.error('Error:', error))
+					.then(response => {
+						console.log('Success:', response[0].pets);
+						let pet = response[0].pets.filter(function(d) { return d._id==identifier})[0];
+						console.log(pet);
+						this.setState({
+							name: pet.name,
+							color: pet.color,
+							breed: pet.breed,
+							size: pet.size,
+							weight: pet.weight,
+							species: pet.species,
+							photo: pet.photo,
+							vaccines: pet.vaccines
+						});
+						console.log(this.state)
+					});			
+
+			} else {
+				this.setState({state: 'Mascota nueva'});
+				this.setState({edit: false});
 			}
 		};
 		setState();

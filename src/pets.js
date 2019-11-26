@@ -129,7 +129,7 @@ function CardModal() {
               </p>
             </div>
           </Modal>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/home', state: {id: '5ddd876572f3b4051ebe2e94', email:'email@email.com'} }}>
             Edit
           </Button>
         </CardActions>
@@ -167,7 +167,7 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                    <Button component={RouterLink} to={{ pathname: '/home', state: { name: 'Cookie'} }} variant="contained" color="primary">
+                    <Button component={RouterLink} to={{ pathname: '/home', state: {id: '', email:'email@email.com'} }} variant="contained" color="primary">
                       Main call to action
                   </Button>
                 </Grid>
