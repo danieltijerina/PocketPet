@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -80,7 +80,7 @@ function getModalStyle() {
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-function CardModal() {
+function CardModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
@@ -100,15 +100,12 @@ function CardModal() {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image="https://source.unsplash.com/random"
+          image={props.pet.photo}
           title="Image title"
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            Heading
-          </Typography>
-          <Typography>
-            This is a media card. You can use this section to describe the content.
+            {props.pet.name}
           </Typography>
         </CardContent>
         <CardActions>
@@ -129,7 +126,7 @@ function CardModal() {
               </p>
             </div>
           </Modal>
-          <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/home', state: {id: '5ddd876572f3b4051ebe2e94', email:'email@email.com'} }}>
+          <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/home', state: {id: props.pet._id, email:props.email} }}>
             Edit
           </Button>
         </CardActions>
@@ -139,7 +136,28 @@ function CardModal() {
 }
 
 export default function Album() {
+  const [pets, setPets] = useState([1, 2, 3]);
+  const [data, setData] = useState(true);
+  let email = 'email@email.com';
+  let serverUrl = 'http://localhost:4000/';
   const classes = useStyles();
+
+  useEffect(() => {
+    if(data) {
+      let getUserInfo = () => {
+        fetch(serverUrl + 'user/' + email).then(response => {
+          return response.json();
+        }).then(data => {
+          console.log('call')
+          setPets(data[0].pets);
+          setData(false);
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+      getUserInfo();
+    }
+  })
 
   return (
     <React.Fragment>
@@ -183,8 +201,8 @@ export default function Album() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map(card => (
-              <CardModal/>
+            {pets.map(pet => (
+              <CardModal {...{pet, email}} />
             ))}
           </Grid>
         </Container>
