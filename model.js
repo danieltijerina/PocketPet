@@ -22,8 +22,8 @@ const userSchema = mongoose.Schema({
         species: String,
         photo: String,
         vaccines: [{
-            type: String,
-            application_date: Date
+            description: String,
+            application_date: String
         }]
     }]
 });
@@ -31,8 +31,22 @@ const userSchema = mongoose.Schema({
 let User = mongoose.model('User', userSchema);
 
 let UserList = {
-	addPet: function(email, pets) {
-		return User.findOneAndUpdate({email: email}, {$set: {pets: pets}}).then(foundUser => {
+	addPet: function(email, pet) {
+		return User.findOneAndUpdate({email: email}, {$push: {pets: pet}}).then(foundUser => {
+			return foundUser;
+		}).catch(err => {
+			throw Error(err);
+		});
+	},
+	updatePet: function(email, pet_id, newPet) {
+		return User.findOneAndUpdate({email: email, 'pets._id': pet_id}, { $set: {'pets.$': newPet}}, { new: true }).then(user => {
+			return user;
+		}).catch(err => {
+			throw Error(err);
+		})
+	},
+	addVaccine: function(email, id, vacuna){
+		return User.findOneAndUpdate({email: email, 'pets._id': id}, { $push: {'pets.$.vaccines': vacuna}},  { new: true }).then(foundUser => {
 			return foundUser;
 		}).catch(err => {
 			throw Error(err);

@@ -112,6 +112,32 @@ router.put('/addPet/:email', (req, res, next) => {
 	});
 });
 
+router.post('/updatePet/:email/:id', (req, res) => {
+	const newPet = req.body;
+	const email = req.params.email;
+	const id = req.params.id
+	UserList.updatePet(email, id, newPet).then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	});	
+})
+
+router.put('/addVaccine/:email/:id', (req, res) => {
+	const vacuna = req.body;
+	const email = req.params.email;
+	const id = req.params.id;
+	UserList.addVaccine(email, id, vacuna).then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	});
+})
+
 router.get('/pets/:email', (req, res) => {
 	const email = req.params.email;
 	UserList.getByEmail(email).then(response => {
