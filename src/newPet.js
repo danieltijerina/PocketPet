@@ -56,7 +56,7 @@ class NewPet extends Component {
 		});
 		this.populateBreeds = (val) => {
 			this.setState({species: val}, function() {			
-				this.setState({breed: ''});
+				// this.setState({breed: ''});
 				if(this.state.species === 'Perro') {
 					this.setState({breeds: dogBreeds});
 				} else if (this.state.species === 'Gato') {
@@ -201,7 +201,7 @@ class NewPet extends Component {
 				        </div>
 				        <div className="col-md-4">
 				        	<label htmlFor="breed">Raza</label>
-				        	<select className="form-control form-control-lg" name='breed' /*value={this.state.breed}*/ onChange={this.updateValue}>
+				        	<select className="form-control form-control-lg" name='breed' value={this.state.breed} onChange={this.updateValue}>
 				          		{ this.state.breeds.map((breed) => <option value={breed}>{breed}</option> )}
 		          			</select>
 				        </div>
