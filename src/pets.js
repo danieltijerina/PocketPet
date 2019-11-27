@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: 'linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)'
+    ,
     padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
@@ -134,7 +135,7 @@ function CardModal(props) {
         </CardContent>
         <CardActions>
           <Button size="small" color="primary" onClick={ handleOpen }>
-            View
+            Consultar
           </Button>
           <Modal
             aria-labelledby="simple-modal-title"
@@ -191,7 +192,7 @@ function CardModal(props) {
             </div>
           </Modal>
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
-            Edit
+            Editar
           </Button>
           <IconButton onClick={handleDel} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
         </CardActions>

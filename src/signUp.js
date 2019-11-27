@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,8 +18,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ/">
+        PocketPet
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -56,6 +56,8 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [done, setDone] = useState(false);
+  const [style, setStyle] = useState("errorMessage")
+  const [style2, setStyle2] = useState("errorMessage")
 
   const classes = useStyles();
 
@@ -73,13 +75,27 @@ export default function SignUp() {
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
       .then(response => {
-        console.log('Success:', response);
-        setDone(true);
+        if(response.status === 406){
+          console.log("Faltan campos")
+          setStyle2("errorMessage")
+        }else{
+          console.log('Success:', response);
+          if(response.message === "User Already Exists"){
+            console.log("ya existe")
+            setStyle("errorMessage")
+          }if(response.status === 406){
+            setStyle("faltan campos")
+          }else{
+            setStyle("hidden")
+            console.log(response)
+            setDone(true);
+          }
+        }
     });
   }
 
   if(done){
-    return(<Redirect to='/'/>);
+    return(<Redirect to={{pathname: '/', state: {email: email}}}/>);
   } else {
     return (
       <Container component="main" maxWidth="xs">
@@ -89,8 +105,14 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            PocketPet
           </Typography>
+          <p className={style}>
+            *Faltan campos por llenar*
+            </p>
+          <p className={style2}>
+            *El usuario ya existe*
+          </p>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -101,7 +123,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Primer Nombre"
                   autoFocus
                 />
               </Grid>
@@ -111,7 +133,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Apellido"
                   name="lastName"
                   autoComplete="lname"
                 />
@@ -122,7 +144,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Correo Electrónico"
                   name="email"
                   autoComplete="email"
                   onChange={e => setEmail(e.target.value)}
@@ -134,7 +156,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Contraseña"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -144,7 +166,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="Quiero recibir promociones, noticias y todo eso cool."
                 />
               </Grid>
             </Grid>
@@ -155,12 +177,12 @@ export default function SignUp() {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              Registrar
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                  Ya tiene cuenta? Inicia sesión
                 </Link>
               </Grid>
             </Grid>
