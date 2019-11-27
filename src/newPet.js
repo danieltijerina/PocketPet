@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import  { Redirect } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/newPet.css';
 
@@ -29,7 +33,8 @@ class NewPet extends Component {
 			vaccines: [],
 			//Vaccines
 			type: '',
-			application_date: new Date()
+			application_date: new Date(),
+			logged: true,
 		};
 
 		let dogBreeds = [];
@@ -211,16 +216,30 @@ class NewPet extends Component {
     render() {
     	const style = this.state.edit ? {} : {display: 'none'};
     	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
+		  const handleLogout = () => {
+		    this.setState({logged: false});
+		    localStorage.setItem('auth', false);
+		  }
 
-		if(localStorage.getItem('auth') === 'false') {
-			return(<Redirect to="/login"/>);
-		}
 		if(this.state.isDone) {
 			return(<Redirect to={{pathname: '/', state: {email: this.state.email}}} />);
 		}
+		if(!this.state.logged || localStorage.getItem('auth') === 'false'){
+    		return(<Redirect to="/login"/>);
+  		}
         return (
         	<div>
-	        	<div className="container">
+			      <AppBar position="relative">
+			        <Toolbar>
+			          <Typography variant="h5" color="inherit" noWrap>
+			            Editar Mascotas
+			          </Typography>
+			          <span className="toolbarButton">
+			            <Button color='secondary' variant='contained' onClick={handleLogout}>Logout</Button>
+			          </span>
+			        </Toolbar>
+			      </AppBar>
+	        	<div className="container" style={{ padding: '2%'}}>
 		        	<h1>{this.state.state}</h1>
 				    <form onSubmit={this.savePet}>
 				      <div className="form-group">
