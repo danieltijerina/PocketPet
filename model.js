@@ -38,6 +38,13 @@ let UserList = {
 			throw Error(err);
 		});
 	},
+	delPet: function(email, id) {
+		return User.findOneAndUpdate({email: email}, {$pull: {pets: {_id: id}}}, {new: true}).then(foundUser => {
+			return foundUser;
+		}).catch(err => {
+			throw Error(err);
+		});
+	},
 	updatePet: function(email, pet_id, newPet) {
 		return User.findOneAndUpdate({email: email, 'pets._id': pet_id}, { $set: {'pets.$': newPet}}, { new: true }).then(user => {
 			return user;

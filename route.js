@@ -7,6 +7,17 @@ let jsonParser = bodyParser.json();
 
 let {UserList} = require("./model");
 
+router.delete('/delPet/:email/:id', (req, res) => {
+	const id = req.params.id;
+	const email = req.params.email;
+	UserList.delPet(email, id).then(response => {
+		console.log(response);
+		return res.status(200).json(response);
+	}).catch(err => {
+		console.log(err);
+		return res.status(500).json(err);
+	});	
+});
 
 router.post('/register', (req, res, next) => {
 	if(!req.body.email || !req.body.password) {

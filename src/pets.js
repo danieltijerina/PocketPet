@@ -95,6 +95,18 @@ function CardModal(props) {
     setOpen(false);
   };
 
+  const handleDel = () => {
+    let url = 'http://localhost:4000/' + 'delPet/' + props.email + '/' + props.pet._id
+    fetch(url, {
+      method: 'DELETE'
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => {
+        console.log('Success:', response);
+        props.handleChange(response);
+      });
+  }
+
   const classes = useStyles();
 
   let populateTable = () => {
@@ -181,7 +193,7 @@ function CardModal(props) {
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
             Edit
           </Button>
-          <IconButton onClick={() => {console.log('button')}} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
+          <IconButton onClick={handleDel} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
         </CardActions>
       </Card>
     </Grid>
@@ -198,6 +210,10 @@ export default function Album(props) {
 
   const handleLogout = () => {
     setLogged(false);
+  }
+
+  const handleChange = (data) => {
+    setData(data);
   }
 
   useEffect(() => {
@@ -260,7 +276,7 @@ export default function Album(props) {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {pets.map(pet => (
-              <CardModal {...{pet, email}} />
+              <CardModal {...{pet, email, handleChange}} />
             ))}
           </Grid>
         </Container>
