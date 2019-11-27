@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import  { Redirect } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -126,7 +127,7 @@ function CardModal(props) {
               </p>
             </div>
           </Modal>
-          <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/home', state: {id: props.pet._id, email:props.email} }}>
+          <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
             Edit
           </Button>
         </CardActions>
@@ -188,7 +189,7 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                    <Button component={RouterLink} to={{ pathname: '/home', state: {id: '', email:email} }} variant="contained" color="primary">
+                    <Button component={RouterLink} to={{ pathname: '/pet', state: {id: '', email:email} }} variant="contained" color="primary">
                       Main call to action
                   </Button>
                 </Grid>
