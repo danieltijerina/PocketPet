@@ -227,21 +227,11 @@ class NewPet extends Component {
 				          <input className="form-control form-control-lg" type='text' value={this.state.color} name='color' placeholder="ej. Cafe, Dorado, Rojo" onChange={this.updateValue}></input>
 				        </div>
 				        <div className="col-md-4">
-				        	<label htmlFor="breed">Raza</label>
-				        	<select className="form-control form-control-lg" name='breed' value={this.state.breed} onChange={this.updateValue}>
-				          		{ this.state.breeds.map((breed) => <option value={breed}>{breed}</option> )}
-		          			</select>
-				        </div>
-				      </div>
-				      <div className="form-group">
-				        <div className="col-md-4">
 				          <label htmlFor="size">Tamaño</label>
 				          <input className="form-control form-control-lg" type='text' value={this.state.size} name='size' placeholder="Pequeño, Mediano, Grande" onChange={this.updateValue}></input>
 				        </div>
-				        <div className="col-md-4">
-				          <label htmlFor="weight">Peso</label>
-				          <input className="form-control form-control-lg" type='number' value={this.state.weight} name='weight' placeholder="En Kgs" onChange={this.updateValue}></input>
-				        </div>
+				      </div>
+				      <div className="form-group">
 				        <div className="col-md-4">
 				          <label htmlFor="species">Specie</label>
 				          <select className="form-control form-control-lg" name="species" value={this.state.species} onChange={e => this.populateBreeds(e.target.value)}>
@@ -249,6 +239,16 @@ class NewPet extends Component {
 				          	<option value='Perro'>Perro</option>
 				          	<option value='Gato'>Gato</option>
 				          </select>
+				        </div>
+				        <div className="col-md-4">
+				        	<label htmlFor="breed">Raza</label>
+				        	<select className="form-control form-control-lg" name='breed' value={this.state.breed} onChange={this.updateValue}>
+				          		{ this.state.breeds.map((breed) => <option value={breed}>{breed}</option> )}
+		          			</select>
+				        </div>
+				        <div className="col-md-4">
+				          <label htmlFor="weight">Peso</label>
+				          <input className="form-control form-control-lg" type='number' value={this.state.weight} name='weight' placeholder="En Kgs" onChange={this.updateValue}></input>
 				        </div>
 				      </div>
 				      <div className="form-group">
