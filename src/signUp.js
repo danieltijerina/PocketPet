@@ -77,14 +77,14 @@ export default function SignUp() {
       .then(response => {
         if(response.status === 406){
           console.log("Faltan campos")
-          setStyle2("errorMessage")
+          setStyle("show")
         }else{
           console.log('Success:', response);
           if(response.message === "User Already Exists"){
             console.log("ya existe")
-            setStyle("errorMessage")
+            setStyle2("show")
           }else{
-            setStyle("hidden")
+            setStyle("errorMessage")
             console.log(response)
             setDone(true);
           }
