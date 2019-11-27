@@ -211,6 +211,7 @@ export default function Album(props) {
 
   const handleLogout = () => {
     setLogged(false);
+    localStorage.setItem('auth', false);
   }
 
   const handleChange = (data) => {
@@ -218,7 +219,7 @@ export default function Album(props) {
   }
 
   useEffect(() => {
-    if(data) {
+    if(data && props.location.state) {
       setEmail(props.location.state.email);
       let getUserInfo = () => {
         fetch(serverUrl + 'user/' + email).then(response => {
@@ -234,7 +235,7 @@ export default function Album(props) {
     }
   })
 
-  if(!logged){
+  if(!logged || localStorage.getItem('auth') == 'false'){
     return(<Redirect to="/login"/>);
   }
   return (

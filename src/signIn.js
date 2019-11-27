@@ -86,6 +86,7 @@ export default function SignIn() {
         }else{
           setStyle("errorMessage")
           setAuth(true);
+          localStorage.setItem('auth', true);
         }
     });
   };

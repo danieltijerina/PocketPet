@@ -15,10 +15,10 @@ class NewPet extends Component {
 			state: 'Registrar tu mascota',
 			edit: false,
 			//User attributes
-			email: this.props.location.state.email,
+			email: '',
 			isDone: false,
 			//Pet attributes
-			id: this.props.location.state.id,
+			id: '',
 			name: '',
 			color: '',
 			breed: '',
@@ -202,13 +202,20 @@ class NewPet extends Component {
 				this.setState({edit: false});
 			}
 		};
-		setState();
+		if(this.props.location.state) {
+			this.setState({ email: this.props.location.state.email });
+			this.setState({ id: this.props.location.state.id });
+			setState();
+		}
 	}
     
     render() {
     	const style = this.state.edit ? {} : {display: 'none'};
     	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
 
+		if(localStorage.getItem('auth') == 'false') {
+			return(<Redirect to="/login"/>);
+		}
 		if(this.state.isDone) {
 			return(<Redirect to={{pathname: '/', state: {email: this.state.email}}} />);
 		}
