@@ -15,10 +15,10 @@ class NewPet extends Component {
 			state: 'Registrar tu mascota',
 			edit: false,
 			//User attributes
-			email: '',
+			email: this.props.location.state.email,
 			isDone: false,
 			//Pet attributes
-			id: '',
+			id: this.props.location.state.id,
 			name: '',
 			color: '',
 			breed: '',
@@ -203,8 +203,8 @@ class NewPet extends Component {
 			}
 		};
 		if(this.props.location.state) {
-			this.setState({ email: this.props.location.state.email });
-			this.setState({ id: this.props.location.state.id });
+			// this.setState({ email: this.props.location.state.email });
+			// this.setState({ id: this.props.location.state.id });
 			setState();
 		}
 	}
