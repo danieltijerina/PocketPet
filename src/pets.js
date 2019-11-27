@@ -96,6 +96,18 @@ function CardModal(props) {
     setOpen(false);
   };
 
+  const handleDel = () => {
+    let url = 'http://localhost:4000/' + 'delPet/' + props.email + '/' + props.pet._id
+    fetch(url, {
+      method: 'DELETE'
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => {
+        console.log('Success:', response);
+        props.handleChange(response);
+      });
+  }
+
   const classes = useStyles();
 
   let populateTable = () => {
@@ -182,7 +194,7 @@ function CardModal(props) {
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
             Editar
           </Button>
-          <IconButton onClick={() => {console.log('button')}} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
+          <IconButton onClick={handleDel} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
         </CardActions>
       </Card>
     </Grid>
@@ -193,8 +205,17 @@ export default function Album(props) {
   const [pets, setPets] = useState([]);
   const [email, setEmail] = useState("");
   const [data, setData] = useState(true);
+  const [logged, setLogged] = useState(true);
   let serverUrl = 'http://localhost:4000/';
   const classes = useStyles();
+
+  const handleLogout = () => {
+    setLogged(false);
+  }
+
+  const handleChange = (data) => {
+    setData(data);
+  }
 
   useEffect(() => {
     if(data) {
@@ -213,6 +234,9 @@ export default function Album(props) {
     }
   })
 
+  if(!logged){
+    return(<Redirect to="/login"/>);
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -222,6 +246,9 @@ export default function Album(props) {
           <Typography variant="h6" color="inherit" noWrap>
             Mis mascotas
           </Typography>
+          <span className="toolbarButton">
+            <Button onClick={handleLogout}>Logout</Button>
+          </span>
         </Toolbar>
       </AppBar>
       <main>
@@ -250,7 +277,7 @@ export default function Album(props) {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {pets.map(pet => (
-              <CardModal {...{pet, email}} />
+              <CardModal {...{pet, email, handleChange}} />
             ))}
           </Grid>
         </Container>

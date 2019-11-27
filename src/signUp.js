@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {Link as RouterLink} from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -80,16 +81,14 @@ export default function SignUp() {
       .then(response => {
         if(response.status === 406){
           console.log("Faltan campos")
-          setStyle2("errorMessage")
+          setStyle("show")
         }else{
           console.log('Success:', response);
           if(response.message === "User Already Exists"){
             console.log("ya existe")
-            setStyle("errorMessage")
-          }if(response.status === 406){
-            setStyle("faltan campos")
+            setStyle2("show")
           }else{
-            setStyle("hidden")
+            setStyle("errorMessage")
             console.log(response)
             setDone(true);
           }
@@ -219,9 +218,9 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" style={{ fontSize: 12}} variant="body3">
-                  Ya tiene cuenta? Inicia sesión
-                </Link>
+                <RouterLink to="/login" style={{fontSize:12}}>
+                  {"Ya tiene cuenta? Inicia sesión"}
+                </RouterLink>
               </Grid>
             </Grid>
           </form>
