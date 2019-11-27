@@ -233,7 +233,7 @@ class NewPet extends Component {
 		          			</select>
 				        </div>
 				      </div>
-				      <div className="form-gruop">
+				      <div className="form-group">
 				        <div className="col-md-4">
 				          <label htmlFor="size">Tamaño</label>
 				          <input className="form-control form-control-lg" type='text' value={this.state.size} name='size' placeholder="Pequeño, Mediano, Grande" onChange={this.updateValue}></input>

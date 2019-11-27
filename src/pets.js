@@ -16,6 +16,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Modal from '@material-ui/core/Modal';
 import {Link as RouterLink} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/pet.css';
 
 function Copyright() {
   return (
@@ -63,7 +65,8 @@ const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
     width: 400,
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: 'linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)',
+    borderRadius: '2%',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -71,15 +74,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getModalStyle() {
-  const top = 25;
+  const top = 15;
 
   return {
     top: `${top}%`,
     margin:'auto',
   };
 }
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function CardModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
@@ -94,6 +95,16 @@ function CardModal(props) {
   };
 
   const classes = useStyles();
+
+  let populateTable = () => {
+    console.log(props)
+    return props.pet.vaccines.map((vaccine, index) => 
+      <tr key={index}>
+        <td>{vaccine.type}</td>
+        <td>{vaccine.application_date}</td>
+      </tr>
+    );
+  }
 
   return (
     // TODO(Daniel): Keys should be unique (maybe pass key as prop?)
@@ -121,10 +132,50 @@ function CardModal(props) {
             style={{display:'flex',alignItems:'center',justifyContent:'center'}}
           >
             <div style={modalStyle} className={classes.paper}>
-              <h2 id="simple-modal-title">Text in a modal</h2>
-              <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
+              <h2 id="simple-modal-title">{props.pet.name}</h2>
+              <div className='modalImg'>
+                <img className='srcImg' src={props.pet.photo} />
+              </div>
+              <div className="row">
+                <div className="col-md-4">
+                  <label htmlFor="color">Color</label>
+                  <p className="modalText" name='color'>{props.pet.color}</p>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="species">Specie</label>
+                  <p className="modalText" name='species'>{props.pet.species}</p>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="breed">Raza</label>
+                  <p className="modalText" name='breed'>{props.pet.breed}</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4">
+                  <label htmlFor="size">Tamaño</label>
+                  <p className="modalText" name='size'>{props.pet.size}</p>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="weight">Peso</label>
+                  <p className="modalText" name='weight'>{props.pet.weight} Kg</p>
+                </div>
+              </div>
+              <div>
+                <h2>Vacunas</h2>
+                <div className='pre-scrollable'>
+                  <table className='table'>
+                    <thead>
+                      <tr>
+                        <th scope='col'>Descripción</th>
+                        <th scope='col'>Fecha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { populateTable() }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </Modal>
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
@@ -137,7 +188,7 @@ function CardModal(props) {
 }
 
 export default function Album(props) {
-  const [pets, setPets] = useState([1, 2, 3]);
+  const [pets, setPets] = useState([]);
   const [email, setEmail] = useState("");
   const [data, setData] = useState(true);
   let serverUrl = 'http://localhost:4000/';
