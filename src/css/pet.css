@@ -21,6 +21,10 @@
 	max-height: 80px;
 }
 
+.toolbarButton {
+	margin-left: auto;
+}
+
 main {
 	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }

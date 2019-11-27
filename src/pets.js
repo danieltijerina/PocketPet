@@ -191,8 +191,13 @@ export default function Album(props) {
   const [pets, setPets] = useState([]);
   const [email, setEmail] = useState("");
   const [data, setData] = useState(true);
+  const [logged, setLogged] = useState(true);
   let serverUrl = 'http://localhost:4000/';
   const classes = useStyles();
+
+  const handleLogout = () => {
+    setLogged(false);
+  }
 
   useEffect(() => {
     if(data) {
@@ -214,6 +219,9 @@ export default function Album(props) {
     }
   })
 
+  if(!logged){
+    return(<Redirect to="/login"/>);
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -223,6 +231,9 @@ export default function Album(props) {
           <Typography variant="h6" color="inherit" noWrap>
             Mis mascotas
           </Typography>
+          <span className="toolbarButton">
+            <Button onClick={handleLogout}>Logout</Button>
+          </span>
         </Toolbar>
       </AppBar>
       <main>
