@@ -64,7 +64,8 @@ const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
     width: 400,
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: 'linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)',
+    borderRadius: '2%',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -72,15 +73,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getModalStyle() {
-  const top = 25;
+  const top = 15;
 
   return {
     top: `${top}%`,
     margin:'auto',
   };
 }
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function CardModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
@@ -95,6 +94,16 @@ function CardModal(props) {
   };
 
   const classes = useStyles();
+
+  let populateTable = () => {
+    console.log(props)
+    return props.pet.vaccines.map((vaccine, index) => 
+      <tr key={index}>
+        <td>{vaccine.type}</td>
+        <td>{vaccine.application_date}</td>
+      </tr>
+    );
+  }
 
   return (
     // TODO(Daniel): Keys should be unique (maybe pass key as prop?)
@@ -124,30 +133,46 @@ function CardModal(props) {
             <div style={modalStyle} className={classes.paper}>
               <h2 id="simple-modal-title">{props.pet.name}</h2>
               <div className='modalImg'>
-                <img className='modalImg' src={props.pet.photo} />
+                <img className='srcImg' src={props.pet.photo} />
               </div>
-                <div className="form-group">
+              <div className="row">
                 <div className="col-md-4">
                   <label htmlFor="color">Color</label>
                   <p className="modalText" name='color'>{props.pet.color}</p>
                 </div>
                 <div className="col-md-4">
+                  <label htmlFor="species">Specie</label>
+                  <p className="modalText" name='species'>{props.pet.species}</p>
+                </div>
+                <div className="col-md-4">
                   <label htmlFor="breed">Raza</label>
-                  <input type='text' className="form-control form-control-lg" name='breed' value={props.pet.breed} readOnly></input>
+                  <p className="modalText" name='breed'>{props.pet.breed}</p>
                 </div>
               </div>
-              <div className="form-gruop">
+              <div className="row">
                 <div className="col-md-4">
                   <label htmlFor="size">Tamaño</label>
-                  <input className="form-control form-control-lg" type='text' value={props.pet.size} name='size' readOnly></input>
+                  <p className="modalText" name='size'>{props.pet.size}</p>
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="weight">Peso</label>
-                  <input className="form-control form-control-lg" type='text' value={props.pet.weight} name='weight' readOnly></input>
+                  <p className="modalText" name='weight'>{props.pet.weight} Kg</p>
                 </div>
-                <div className="col-md-4">
-                  <label htmlFor="species">Specie</label>
-                  <input className="form-control form-control-lg" type='text' name="species" value={props.pet.species} readOnly></input>
+              </div>
+              <div>
+                <h2>Vacunas</h2>
+                <div className='pre-scrollable'>
+                  <table className='table'>
+                    <thead>
+                      <tr>
+                        <th scope='col'>Descripción</th>
+                        <th scope='col'>Fecha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { populateTable() }
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -162,7 +187,7 @@ function CardModal(props) {
 }
 
 export default function Album(props) {
-  const [pets, setPets] = useState([1, 2, 3]);
+  const [pets, setPets] = useState([]);
   const [email, setEmail] = useState("");
   const [data, setData] = useState(true);
   let serverUrl = 'http://localhost:4000/';
