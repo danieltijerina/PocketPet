@@ -74,7 +74,9 @@ export default function SignIn() {
       .catch(error => console.error('Error:', error))
       .then(response => {
         console.log('Success:', response);
-        setAuth(true);
+        if(response.status === 201){
+          setAuth(true);
+        }
     });
   };
 

@@ -10,7 +10,7 @@ class App extends Component {
       return (
       <div>
           <Switch>
-            <Route path="/home" component={newPet} />
+            <Route path="/pet" component={newPet} />
             <Route path="/login" component={SignIn}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/" component={Album} />

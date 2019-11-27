@@ -125,9 +125,25 @@ class NewPet extends Component {
 		this.addVaccine = (e) => {
 			e.preventDefault();
 			let vaccine = {
-				type: this.state.type,
+				description: this.state.type,
 				application_date: this.state.application_date
 			};
+			console.log(vaccine);
+
+			let url = "http://localhost:4000/addVaccine/" + this.state.email + '/' + this.state.id;
+			console.log(url);
+			fetch(url, {
+				method: 'PUT',
+				body: JSON.stringify(vaccine), // data can be `string` or {object}!
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+				.catch(error => console.error('Error:', error))
+				.then(response => {
+					console.log('Success:', response);
+				});
+
 			let vaccineList = this.state.vaccines;
 			vaccineList.push(vaccine);
 			this.setState({vaccines: vaccineList, type: '', application_date: new Date()});
@@ -142,7 +158,7 @@ class NewPet extends Component {
 		this.populateTable = () => {
 			return this.state.vaccines.map((vaccine, index) => 
 				<tr key={index}>
-					<td>{vaccine.type}</td>
+					<td>{vaccine.description}</td>
 					<td>{vaccine.application_date}</td>
 					<td><input type='button' className='btn btn-danger' value="X" onClick={() => this.deleteRow(index)}></input></td>
 				</tr>
