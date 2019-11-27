@@ -135,16 +135,19 @@ function CardModal(props) {
   );
 }
 
-export default function Album() {
+export default function Album(props) {
   const [pets, setPets] = useState([1, 2, 3]);
+  const [email, setEmail] = useState("");
   const [data, setData] = useState(true);
-  let email = 'email@email.com';
   let serverUrl = 'http://localhost:4000/';
   const classes = useStyles();
 
   useEffect(() => {
     if(data) {
+      setEmail(props.location.state.email);
       let getUserInfo = () => {
+        console.log(email)
+        console.log(serverUrl + 'user/' + email)
         fetch(serverUrl + 'user/' + email).then(response => {
           return response.json();
         }).then(data => {
@@ -185,7 +188,7 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                    <Button component={RouterLink} to={{ pathname: '/home', state: {id: '', email:'email@email.com'} }} variant="contained" color="primary">
+                    <Button component={RouterLink} to={{ pathname: '/home', state: {id: '', email:email} }} variant="contained" color="primary">
                       Main call to action
                   </Button>
                 </Grid>

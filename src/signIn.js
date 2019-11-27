@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom';
 import Album from './pets';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -79,7 +79,7 @@ export default function SignIn() {
   };
 
   if(auth) {
-    return(<Redirect to='/'/>);
+    return (<Redirect to={{pathname: '/', state: {email: email}}} />);
   } else {
     return (
       <Container component="main" maxWidth="xs">
