@@ -123,7 +123,7 @@ function CardModal(props) {
         </CardContent>
         <CardActions>
           <Button size="small" color="primary" onClick={ handleOpen }>
-            View
+            Consultar
           </Button>
           <Modal
             aria-labelledby="simple-modal-title"
@@ -180,7 +180,7 @@ function CardModal(props) {
             </div>
           </Modal>
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
-            Edit
+            Editar
           </Button>
           <IconButton onClick={() => {console.log('button')}} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
         </CardActions>

@@ -28,3 +28,11 @@ main {
 	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
+.errorMessage{
+	display: none;
+}
+
+.hidden{
+	color: rgb(158, 10, 10)
+}
+
