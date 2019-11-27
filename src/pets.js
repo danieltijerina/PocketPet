@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: 'linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)'
+    ,
     padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
