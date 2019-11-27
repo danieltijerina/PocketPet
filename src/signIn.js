@@ -14,11 +14,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-<<<<<<< HEAD
 import {Link as RouterLink} from 'react-router-dom';
-=======
 import './css/pet.css';
->>>>>>> 15e4aa2370824aaff797aa095cace45e76f6783c
 
 function Copyright() {
   return (
