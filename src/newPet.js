@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  { Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/newPet.css';
 
@@ -15,6 +16,7 @@ class NewPet extends Component {
 			edit: false,
 			//User attributes
 			email: this.props.location.state.email,
+			isDone: false,
 			//Pet attributes
 			id: this.props.location.state.id,
 			name: '',
@@ -98,7 +100,10 @@ class NewPet extends Component {
 					}
 				}).then(res => res.json())
 					.catch(error => console.error('Error:', error))
-					.then(response => console.log('Success:', response));
+					.then(response => {
+						console.log('Success:', response);
+						this.setState({isDone: true});
+					});
 			} else {
 				let url = "http://localhost:4000/addPet/" + this.state.email;
 				console.log(url);
@@ -110,7 +115,10 @@ class NewPet extends Component {
 					}
 				}).then(res => res.json())
 					.catch(error => console.error('Error:', error))
-					.then(response => console.log('Success:', response));
+					.then(response => {
+						console.log('Success:', response);
+						this.setState({isDone: true});
+				});
 			}
 		};
 
@@ -185,6 +193,9 @@ class NewPet extends Component {
     	const style = this.state.edit ? {} : {display: 'none'};
     	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
 
+		if(this.state.isDone) {
+			return(<Redirect to={{pathname: '/', state: {email: this.state.email}}} />);
+		}
         return (
         	<div>
 	        	<div className="container">
@@ -238,7 +249,7 @@ class NewPet extends Component {
 				      	<div className="col-sm-3">
 				      		<input className='btn btn-success btn-lg' type='submit' value='Guardar'></input>
 				      		<span> </span>
-				      		<input className='btn btn-danger btn-lg' type='button' value='Cancelar'></input>
+				      		<input className='btn btn-danger btn-lg' type='button' value='Cancelar' onClick={() => this.setState({isDone: true})}></input>
 				      	</div>
 				      </div>
 				    </form>
