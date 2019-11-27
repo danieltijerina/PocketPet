@@ -21,8 +21,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ/">
+        PocketPet
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -170,7 +170,7 @@ export default function Album(props) {
         <Toolbar>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Mis mascotas
           </Typography>
         </Toolbar>
       </AppBar>
@@ -179,23 +179,17 @@ export default function Album(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
+              Pocket Pet
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
+              <p>¡Bienvenido!</p>
+              <p>Consulta, agrega o modifica tus mascotas</p>
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
                     <Button component={RouterLink} to={{ pathname: '/pet', state: {id: '', email:email} }} variant="contained" color="primary">
-                      Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
+                      Agregar mascota
                   </Button>
                 </Grid>
               </Grid>
@@ -214,10 +208,7 @@ export default function Album(props) {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          Pocket Pet
         </Typography>
         <Copyright />
       </footer>
