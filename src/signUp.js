@@ -50,6 +50,9 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formField: {
+    fontSize: 15,
+  }
 }));
 
 export default function SignUp() {
@@ -104,7 +107,7 @@ export default function SignUp() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h3">
             PocketPet
           </Typography>
           <p className={style}>
@@ -119,6 +122,16 @@ export default function SignUp() {
                 <TextField
                   autoComplete="fname"
                   name="firstName"
+                  InputProps={{
+                    classes: {
+                      input: classes.formField,
+                    }
+                  }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.formField,
+                    }
+                  }}
                   variant="outlined"
                   required
                   fullWidth
@@ -135,6 +148,16 @@ export default function SignUp() {
                   id="lastName"
                   label="Apellido"
                   name="lastName"
+                  InputProps={{
+                    classes: {
+                      input: classes.formField,
+                    }
+                  }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.formField,
+                    }
+                  }}
                   autoComplete="lname"
                 />
               </Grid>
@@ -146,6 +169,16 @@ export default function SignUp() {
                   id="email"
                   label="Correo Electrónico"
                   name="email"
+                  InputProps={{
+                    classes: {
+                      input: classes.formField,
+                    }
+                  }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.formField,
+                    }
+                  }}
                   autoComplete="email"
                   onChange={e => setEmail(e.target.value)}
                 />
@@ -156,17 +189,21 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
+                  InputProps={{
+                    classes: {
+                      input: classes.formField,
+                    }
+                  }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.formField,
+                    }
+                  }}
                   label="Contraseña"
                   type="password"
                   id="password"
                   autoComplete="current-password"
                   onChange={e => setPassword(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="Quiero recibir promociones, noticias y todo eso cool."
                 />
               </Grid>
             </Grid>
@@ -176,12 +213,13 @@ export default function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              style={{ fontSize: 12}}
             >
               Registrar
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" style={{ fontSize: 12}} variant="body3">
                   Ya tiene cuenta? Inicia sesión
                 </Link>
               </Grid>

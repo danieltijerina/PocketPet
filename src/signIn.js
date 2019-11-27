@@ -51,6 +51,9 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formField: {
+    fontSize: 15,
+  }
 }));
 
 export default function SignIn() {
@@ -95,13 +98,13 @@ export default function SignIn() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h3">
             Pocket Pet
           </Typography>
           <p className={style} id="error">
             *Contraseña o usuario incorrecto*
             </p>
-          <form onSubmit={handleSubmit} className={classes.form} noValidate>
+          <form onSubmit={handleSubmit} className={classes.form} style={{ fontSize: 12}} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -110,6 +113,16 @@ export default function SignIn() {
               id="email"
               label="Correo Electrónico"
               name="email"
+              InputProps={{
+                classes: {
+                  input: classes.formField,
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.formField,
+                }
+              }}
               autoComplete="email"
               autoFocus
               onChange={e => setEmail(e.target.value)}
@@ -120,15 +133,22 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
+              InputProps={{
+                classes: {
+                  input: classes.formField,
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.formField,
+                }
+              }}
               label="Contraseña"
               type="password"
               id="password"
+              style={{ fontSize: 12}}
               autoComplete="current-password"
               onChange={e => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recuerdáme"
             />
             <Button
               type="submit"
@@ -136,17 +156,13 @@ export default function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              style={{ fontSize: 12}}
             >
               Iniciar sesión
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/singup" style={{ fontSize: 12}} variant="body3">
                   {"No tienes una cuenta? Registrate"}
                 </Link>
               </Grid>
