@@ -97,7 +97,7 @@ function CardModal(props) {
   };
 
   const handleDel = () => {
-    let url = 'http://localhost:4000/' + 'delPet/' + props.email + '/' + props.pet._id
+    let url = 'http://localhost:4000/' + 'delPet/' + props.email + '/' + props.pet._id;
     fetch(url, {
       method: 'DELETE'
     }).then(res => res.json())
@@ -147,7 +147,7 @@ function CardModal(props) {
             <div style={modalStyle} className={classes.paper}>
               <h2 id="simple-modal-title">{props.pet.name}</h2>
               <div className='modalImg'>
-                <img className='srcImg' src={props.pet.photo} />
+                <img className='srcImg' src={props.pet.photo} alt='No se encontro la imagen'/>
               </div>
               <div className="row">
                 <div className="col-md-4">
@@ -235,7 +235,7 @@ export default function Album(props) {
     }
   })
 
-  if(!logged || localStorage.getItem('auth') == 'false'){
+  if(!logged || localStorage.getItem('auth') === 'false'){
     return(<Redirect to="/login"/>);
   }
   return (
@@ -248,7 +248,7 @@ export default function Album(props) {
             Mis mascotas
           </Typography>
           <span className="toolbarButton">
-            <Button onClick={handleLogout}>Logout</Button>
+            <Button color='secondary' variant='contained' onClick={handleLogout}>Logout</Button>
           </span>
         </Toolbar>
       </AppBar>

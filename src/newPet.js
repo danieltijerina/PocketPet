@@ -181,8 +181,7 @@ class NewPet extends Component {
 				}).then(res => res.json())
 					.catch(error => console.error('Error:', error))
 					.then(response => {
-						console.log('Success:', response[0].pets);
-						let pet = response[0].pets.filter(function(d) { return d._id==identifier})[0];
+						let pet = response[0].pets.filter(function(d) { return d._id===identifier})[0];
 						console.log(pet);
 						this.setState({
 							name: pet.name,
@@ -213,7 +212,7 @@ class NewPet extends Component {
     	const style = this.state.edit ? {} : {display: 'none'};
     	const disButton = this.state.photo !== '' ? {} : {display: 'none'};	
 
-		if(localStorage.getItem('auth') == 'false') {
+		if(localStorage.getItem('auth') === 'false') {
 			return(<Redirect to="/login"/>);
 		}
 		if(this.state.isDone) {
@@ -265,7 +264,7 @@ class NewPet extends Component {
 				      	</div>
 				      	<div className="col-md-4" style={disButton}>
 				      		<br/>
-				      		<a className='btn btn-primary btn-lg' href={this.state.photo} target="_blank">Vista Previa</a>
+				      		<a className='btn btn-primary btn-lg' href={this.state.photo} target="_blank" rel='noopener noreferrer'>Vista Previa</a>
 				      	</div>
 				      </div>
 				      <div className="form-group">
