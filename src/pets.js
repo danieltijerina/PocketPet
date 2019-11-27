@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Modal from '@material-ui/core/Modal';
 import {Link as RouterLink} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/pet.css';
 
 function Copyright() {
   return (
@@ -120,10 +122,34 @@ function CardModal(props) {
             style={{display:'flex',alignItems:'center',justifyContent:'center'}}
           >
             <div style={modalStyle} className={classes.paper}>
-              <h2 id="simple-modal-title">Text in a modal</h2>
-              <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
+              <h2 id="simple-modal-title">{props.pet.name}</h2>
+              <div className='modalImg'>
+                <img className='modalImg' src={props.pet.photo} />
+              </div>
+                <div className="form-group">
+                <div className="col-md-4">
+                  <label htmlFor="color">Color</label>
+                  <p className="modalText" name='color'>{props.pet.color}</p>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="breed">Raza</label>
+                  <input type='text' className="form-control form-control-lg" name='breed' value={props.pet.breed} readOnly></input>
+                </div>
+              </div>
+              <div className="form-gruop">
+                <div className="col-md-4">
+                  <label htmlFor="size">Tamaño</label>
+                  <input className="form-control form-control-lg" type='text' value={props.pet.size} name='size' readOnly></input>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="weight">Peso</label>
+                  <input className="form-control form-control-lg" type='text' value={props.pet.weight} name='weight' readOnly></input>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="species">Specie</label>
+                  <input className="form-control form-control-lg" type='text' name="species" value={props.pet.species} readOnly></input>
+                </div>
+              </div>
             </div>
           </Modal>
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/home', state: {id: props.pet._id, email:props.email} }}>
