@@ -83,8 +83,6 @@ export default function SignUp() {
           if(response.message === "User Already Exists"){
             console.log("ya existe")
             setStyle("errorMessage")
-          }if(response.status === 406){
-            setStyle("faltan campos")
           }else{
             setStyle("hidden")
             console.log(response)
