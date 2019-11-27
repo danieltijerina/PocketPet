@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import  { Redirect } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -97,10 +98,9 @@ function CardModal(props) {
   const classes = useStyles();
 
   let populateTable = () => {
-    console.log(props)
     return props.pet.vaccines.map((vaccine, index) => 
       <tr key={index}>
-        <td>{vaccine.type}</td>
+        <td>{vaccine.description}</td>
         <td>{vaccine.application_date}</td>
       </tr>
     );
@@ -181,6 +181,7 @@ function CardModal(props) {
           <Button size="small" color="primary" component={RouterLink} to={{ pathname: '/pet', state: {id: props.pet._id, email:props.email} }}>
             Edit
           </Button>
+          <IconButton onClick={() => {console.log('button')}} className='glyphicon glyphicon-trash' aria-label="delete"></IconButton>
         </CardActions>
       </Card>
     </Grid>
@@ -203,12 +204,9 @@ export default function Album(props) {
     if(data) {
       setEmail(props.location.state.email);
       let getUserInfo = () => {
-        console.log(email)
-        console.log(serverUrl + 'user/' + email)
         fetch(serverUrl + 'user/' + email).then(response => {
           return response.json();
         }).then(data => {
-          console.log('call')
           setPets(data[0].pets);
           setData(false);
         }).catch(err => {
